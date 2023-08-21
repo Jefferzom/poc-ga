@@ -18,38 +18,38 @@ export class CustomPaginationComponent extends MatPaginator {
     this.length = Math.ceil(this.length/this.pageSize);
   }
 
-  get displayedPages(): (number | spread) [] {
-    const pages: (number | spread)[] = [];
-    const halfMax = Math.floor(this.maxDisplayedPages / 2);
-
-    if (this.length <= this.maxDisplayedPages) {
-      for (let i = 0; i < this.length; i++) {
+  get displayedPages(): (number | string)[] {
+    const pages: (number | string)[] = [];
+    const totalPages = Math.ceil(this.length / this.pageSize);
+  
+    if (totalPages <= this.maxDisplayedPages) {
+      for (let i = 0; i < totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (this.pageIndex + 1 <= halfMax) {
-        for (let i = 0; i < this.maxDisplayedPages - 1; i++) {
-          pages.push(i);
-        }
-        pages.push('...');
-        pages.push(this.length - 1);
-      } else if (this.pageIndex >= this.length - 1 - halfMax) {
+      const halfMax = Math.floor(this.maxDisplayedPages / 2);
+      const lowerBound = Math.max(0, this.pageIndex - halfMax);
+      const upperBound = Math.min(totalPages - 1, this.pageIndex + halfMax);
+  
+      if (lowerBound > 0) {
         pages.push(0);
-        pages.push('...');
-        for (let i = this.length - this.maxDisplayedPages + 1; i < this.length; i++) {
-          pages.push(i);
+        if (lowerBound > 1) {
+          pages.push('...');
         }
-      } else {
-        pages.push(0);
-        pages.push('...');
-        for (let i = this.pageIndex - halfMax + 1; i <= this.pageIndex + halfMax - 1; i++) {
-          pages.push(i);
+      }
+  
+      for (let i = lowerBound; i <= upperBound; i++) {
+        pages.push(i);
+      }
+  
+      if (upperBound < totalPages - 1) {
+        if (upperBound < totalPages - 2) {
+          pages.push('...');
         }
-        pages.push('...');
-        pages.push(this.length - 1);
+        pages.push(totalPages - 1);
       }
     }
-
+  
     return pages;
   }
 

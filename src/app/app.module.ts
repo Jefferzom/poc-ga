@@ -14,13 +14,12 @@ import { SharedModule } from './shared/shared.module';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { CustomPaginationComponent } from './tabela-com-paginacao/custom-pagination/custom-pagination.component';
-import { CustomPaginationStyleDirective } from './tabela-com-paginacao/custom-pagination-style.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     TabelaComPaginacaoComponent,
     CustomPaginationComponent,
-    CustomPaginationStyleDirective
   ],
   imports: [
     BrowserModule,
