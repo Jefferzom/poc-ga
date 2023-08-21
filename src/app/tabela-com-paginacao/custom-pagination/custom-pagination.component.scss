@@ -1,0 +1,127 @@
+%btn-reset-default {
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+%btn-arrow-disabled {
+  cursor: default !important;
+  &::after {
+    cursor: default !important;
+    border-top: 2px solid #B8B8B8 !important;
+    border-left: 2px solid #B8B8B8 !important;
+  }
+}
+
+%btn-arrow-ellipse {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  transition: 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background: #EDF1FC;
+  }
+}
+
+.ui-kit-custom-pagination {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  &__label {
+    margin-right: 24px;
+    p {
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+  &__ranged {
+    margin: 0 40px;
+    p {
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  &-buttons {
+    @extend %btn-reset-default;
+    font-weight: 700;
+    color: #4B6FDD;
+    font-size: 16px
+  }
+  &-prev {
+    @extend %btn-reset-default;
+    &--disabled {
+      @extend %btn-arrow-disabled 
+    }
+    transform: rotate(-45deg);
+  }
+  &-prev::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #4B6FDD;
+    border-left: 2px solid #4B6FDD;
+  }
+  &-next {
+    &--disabled {
+      @extend %btn-arrow-disabled
+    };
+    @extend %btn-reset-default;
+    transform: rotate(135deg);
+  }
+  &-next::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #4B6FDD;
+    border-left: 2px solid #4B6FDD;
+  }
+  &-next::before {
+    content: '';
+    background: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 40px;
+  }
+
+  .current-page {
+    width: 40px;
+    height: 40px;
+    border-radius: 32px;
+    background: #4B6FDD;
+    color: #fff;
+    font-weight: 700;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-select {
+    max-width: 94px;
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    padding: 8px 16px;
+  }
+  .mdc-menu-surface.mat-mdc-select-panel {
+    left: -16px !important;
+    position: absolute !important;
+    top: 5px;
+  }
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+    color: #4B6FDD !important;
+  }
+  .mat-mdc-paginator .mat-mdc-select-value {
+    font-size: 16px;
+  }
+  .mdc-button {
+    min-width: 0 !important;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px !important;
+  }
+}

@@ -1,0 +1,37 @@
+<div class="ui-kit-custom-pagination">
+  <div class="ui-kit-custom-pagination__label">
+    <p>Itens por página:</p>
+  </div>
+
+  <mat-select [value]="pageSize" (selectionChange)="changePageSize($event)">
+    <mat-option *ngFor="let item of pageSizeOptions" [value]="item">
+      {{item}}
+    </mat-option>
+  </mat-select>
+  <div class="ui-kit-custom-pagination__ranged">
+    <p>
+      {{pageIndex * pageSize + 1}}-{{(pageIndex + 1) * pageSize}} de {{length}}
+    </p>
+  </div>
+  <button
+    class="ui-kit-custom-pagination-prev"
+    [ngClass]="{'ui-kit-custom-pagination-prev--disabled': _previousButtonsDisabled()}" 
+    (click)="previousPage()"
+    ></button>
+    <!-- mat-button -->
+  <button
+    class="ui-kit-custom-pagination-buttons"
+    [class.current-page]="pageIndex + 1 === i + 1"
+    (click)="goToPage(page)"
+    *ngFor="let page of displayedPages; let i = index"
+  >
+    {{ page === '...' ? page : +page + 1}}
+  </button>
+  <!-- mat-button -->
+  <button
+    class="ui-kit-custom-pagination-next"
+    [ngClass]="{'ui-kit-custom-pagination-next--disabled': _nextButtonsDisabled()}" 
+    (click)="nextPage()"
+  >
+  </button>
+</div>
