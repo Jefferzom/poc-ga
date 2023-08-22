@@ -32,13 +32,6 @@ export class TabelaComPaginacaoComponent implements OnInit, OnChanges {
     this.keyName = this.columns.map((res: any) => res.key);
   }
 
-  getTextPaginator(page: number, pageSize: number, length: number) {
-    if (length === 0 || pageSize === 0) {
-      return 'Sem resultados'
-    }
-    return page + 1 + '-' + pageSize + ' de ' + length;
-  }
-
   onPageChange(event: any): void {
     const indexPage = event.pageIndex + 1
     Object.assign(event, {

@@ -1,5 +1,4 @@
-type spread = '...';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component} from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 
 @Component({
@@ -11,51 +10,73 @@ export class CustomPaginationComponent extends MatPaginator {
   constructor(intl: MatPaginatorIntl, changeDetectorRef: ChangeDetectorRef) {
     super(intl, changeDetectorRef);
   }
-  public maxDisplayedPages = 4;
   
   changePageSize(ev: any) {
     this._changePageSize(ev.value);
-    this.length = Math.ceil(this.length/this.pageSize);
   }
 
-  get displayedPages(): (number | string)[] {
-    const pages: (number | string)[] = [];
-    const totalPages = Math.ceil(this.length / this.pageSize);
-  
-    if (totalPages <= this.maxDisplayedPages) {
-      for (let i = 0; i < totalPages; i++) {
-        pages.push(i);
+  createEllipse() {
+    let current = this.pageIndex + 1;
+
+    const max = Math.ceil(this.length/this.pageSize);
+
+    const items: any = [];
+
+    const addPage = (page: any, isActive: any) => {
+      items.push({ page, active: isActive });
+    };
+
+    const addEllipse = () => {
+      items.push({ page: '...', active: false });
+    };
+
+    if (max <= 5) {
+      for (let i = 1; i <= max; i++) {
+        addPage(i, i === current);
       }
     } else {
-      const halfMax = Math.floor(this.maxDisplayedPages / 2);
-      const lowerBound = Math.max(0, this.pageIndex - halfMax);
-      const upperBound = Math.min(totalPages - 1, this.pageIndex + halfMax);
-  
-      if (lowerBound > 0) {
-        pages.push(0);
-        if (lowerBound > 1) {
-          pages.push('...');
-        }
+      addPage(1, current === 1);
+
+      if (current > 2) {
+        addEllipse();
       }
-  
-      for (let i = lowerBound; i <= upperBound; i++) {
-        pages.push(i);
+
+      let r1 = Math.max(current - 1, 2);
+      let r2 = Math.min(current + 1, max - 1);
+
+      for (let i = r1; i <= r2; i++) {
+        addPage(i, i === current);
       }
-  
-      if (upperBound < totalPages - 1) {
-        if (upperBound < totalPages - 2) {
-          pages.push('...');
-        }
-        pages.push(totalPages - 1);
+
+      if (current < max - 1) {
+        addEllipse();
       }
+
+      addPage(max, max === current);
     }
-  
-    return pages;
+    return items;
+  }
+
+  hasPage(pageNumber: number):boolean {
+    return pageNumber > 0 && pageNumber <= this.getNumberOfPages();
   }
 
   goToPage(page: number | string): void {
-    if (typeof page === 'number') {
-      this.pageIndex = page;
+    if(!this.hasPage(+page)) {
+      return;
     }
+
+    const previousPageIndex = this.pageIndex;
+    this.pageIndex = +page - 1;
+    this._myEmitPageEvent(previousPageIndex);
+  }
+
+  private _myEmitPageEvent(previousPageIndex: number) {
+    this.page.emit({
+      previousPageIndex,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      length: this.length
+    });
   }
 }

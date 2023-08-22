@@ -48,8 +48,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getEmitedPageEvent(ev: any) {
+    console.log(ev)
     this.pageSize = ev.pageSize
     this.indexPage = ev.pageIndex
-    this.getContracts(ev.pageIndex, ev.pageSize)
+
+    // this.getContracts(ev.pageIndex, ev.pageSize)
   }
 }

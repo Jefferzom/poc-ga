@@ -9,18 +9,6 @@
   <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
 </table>
 
-<!-- <mat-paginator
-  #paginator
-  style-paginator
-  *ngIf="hasPagination" 
-  [pageSizeOptions]="[5, 10, 15, 20]" 
-  [pageSize]="pageSize" 
-  [pageIndex]="pageIndex - 1"
-  [length]="lengthPagination"
-  [showTotalPages]="3"
-  (page)="onPageChange($event)"
->
-</mat-paginator> -->
 <app-custom-pagination
   #paginator
   *ngIf="hasPagination" 
