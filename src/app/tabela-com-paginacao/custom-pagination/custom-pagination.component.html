@@ -3,7 +3,7 @@
     <p>Itens por página:</p>
   </div>
 
-  <mat-select [value]="pageSize" (selectionChange)="changePageSize($event)">
+  <mat-select #matSelect [value]="pageSize" (selectionChange)="changePageSize($event)">
     <mat-option *ngFor="let item of pageSizeOptions" [value]="item">
       {{item}}
     </mat-option>
@@ -16,7 +16,7 @@
   <button
     class="ui-kit-custom-pagination-prev"
     [ngClass]="{'ui-kit-custom-pagination-prev--disabled': _previousButtonsDisabled()}" 
-    (click)="previousPage()"
+    (click)="previousPage(); getEventArrow('backward')"
     ></button>
     <!-- mat-button -->
   <button
@@ -31,7 +31,7 @@
   <button
     class="ui-kit-custom-pagination-next"
     [ngClass]="{'ui-kit-custom-pagination-next--disabled': _nextButtonsDisabled()}" 
-    (click)="nextPage()"
+    (click)="nextPage(); getEventArrow('forward')"
   >
   </button>
 </div>
