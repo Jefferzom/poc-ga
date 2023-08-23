@@ -21,11 +21,11 @@
     <!-- mat-button -->
   <button
     class="ui-kit-custom-pagination-buttons"
-    [class.current-page]="pageIndex + 1 === i + 1"
-    (click)="goToPage(page)"
-    *ngFor="let page of displayedPages; let i = index"
+    [class.current-page]="item.active"
+    (click)="goToPage(item.page)"
+    *ngFor="let item of createEllipse(); let i = index"
   >
-    {{ page === '...' ? page : +page + 1}}
+    {{item.page}}
   </button>
   <!-- mat-button -->
   <button
