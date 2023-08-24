@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { CustomPaginationComponent } from './custom-pagination.component';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
+  selector: 'app-parent',
   template: `
     <app-custom-pagination
-    [pageSizeOptions]="[5, 10, 15, 20, 100]" 
-    [pageSize]="5" 
+    [pageSizeOptions]="[5, 10, 15, 20, 100]"
+    [pageSize]="5"
     [length]="10"
     ></app-custom-pagination>
   `
 })
-class ParentPaginatorComponent {
-  
-}
+class ParentPaginatorComponent {}
 describe('CustomPaginationComponent', () => {
   let component: CustomPaginationComponent;
   let fixture: ComponentFixture<CustomPaginationComponent>;
@@ -24,23 +24,56 @@ describe('CustomPaginationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CustomPaginationComponent, ParentPaginatorComponent ],
-      imports: [MatPaginatorModule],
+      imports: [MatPaginatorModule, MatSelectModule],
       providers: [MatPaginatorIntl, ChangeDetectorRef],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(CustomPaginationComponent);
     parentPaginatorFixture = TestBed.createComponent(ParentPaginatorComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    parentPaginatorFixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create pagination empty lengh', () => {
+    component.length = 0
+    component.createEllipse()
+    parentPaginatorFixture.detectChanges()
+    expect(component.createEllipse()).toStrictEqual([]);
+  });
+
+  it('should create pagination with 6 pages', () => {
+    component.length = 30
+    component.pageSize = 5
+    component.createEllipse()
+    parentPaginatorFixture.detectChanges()
+    const shouldReturn =  [
+      { page: 1, active: true },
+      { page: 2, active: false },
+      { page: '...', active: false },
+      { page: 6, active: false }
+    ]
+    expect(component.createEllipse().length).toBe(4);
+    expect(component.createEllipse()).toStrictEqual(shouldReturn);
+  });
+  it('should create pagination with 6 pages current page is 4', () => {
+    component.length = 30
+    component.pageIndex = 4
+    component.pageSize = 5
+    component.createEllipse()
+    parentPaginatorFixture.detectChanges()
+    const shouldReturn =  [
+      { page: 1, active: false },
+      { page: '...', active: false },
+      { page: 4, active: false },
+      { page: 5, active: true },
+      { page: 6, active: false }
+    ]
+    expect(component.createEllipse()[3].active).toBeTruthy();
+    expect(component.createEllipse()).toStrictEqual(shouldReturn);
+  });
 });
