@@ -68,15 +68,7 @@ export class CustomPaginationComponent extends MatPaginator {
   }
 
 
-  hasPage(pageNumber: number):boolean {
-    return pageNumber > 0 && pageNumber <= this.getNumberOfPages();
-  }
-
   goToPage(page: number | string): void {
-    if(!this.hasPage(+page)) {
-      return;
-    }
-
     const previousPageIndex = this.pageIndex;
     this.pageIndex = +page - 1;
     this._myEmitPageEvent(previousPageIndex);
@@ -96,7 +88,6 @@ export class CustomPaginationComponent extends MatPaginator {
   }
 
   getEventArrow(ev?: string) {
-    console.log(ev)
     this._myEmitPageEvent(undefined, ev)
   }
 

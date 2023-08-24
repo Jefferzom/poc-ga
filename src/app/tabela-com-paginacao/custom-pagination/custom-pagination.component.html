@@ -3,35 +3,46 @@
     <p>Itens por página:</p>
   </div>
 
-  <mat-select #matSelect [value]="pageSize" (selectionChange)="changePageSize($event)">
+  <mat-select
+    #matSelect
+    [value]="pageSize"
+    (selectionChange)="changePageSize($event)"
+  >
     <mat-option *ngFor="let item of pageSizeOptions" [value]="item">
-      {{item}}
+      {{ item }}
     </mat-option>
   </mat-select>
   <div class="ui-kit-custom-pagination__ranged">
     <p>
-      {{pageIndex * pageSize + 1}}-{{(pageIndex + 1) * pageSize}} de {{length}}
+      {{ pageIndex * pageSize + 1 }}-{{ (pageIndex + 1) * pageSize }} de
+      {{ length }}
     </p>
   </div>
   <button
     class="ui-kit-custom-pagination-prev"
-    [ngClass]="{'ui-kit-custom-pagination-prev--disabled': _previousButtonsDisabled()}" 
+    id="prevPage"
+    [ngClass]="{
+      'ui-kit-custom-pagination-prev--disabled': _previousButtonsDisabled()
+    }"
     (click)="previousPage(); getEventArrow('backward')"
-    ></button>
-    <!-- mat-button -->
+  ></button>
+  <!-- mat-button -->
   <button
     class="ui-kit-custom-pagination-buttons"
     [class.current-page]="item.active"
     (click)="goToPage(item.page)"
     *ngFor="let item of createEllipse(); let i = index"
+    id="gotoPage"
   >
-    {{item.page}}
+    {{ item.page }}
   </button>
   <!-- mat-button -->
   <button
     class="ui-kit-custom-pagination-next"
-    [ngClass]="{'ui-kit-custom-pagination-next--disabled': _nextButtonsDisabled()}" 
+    id="nextPage"
+    [ngClass]="{
+      'ui-kit-custom-pagination-next--disabled': _nextButtonsDisabled()
+    }"
     (click)="nextPage(); getEventArrow('forward')"
-  >
-  </button>
+  ></button>
 </div>

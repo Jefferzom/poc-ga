@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 
 import { CustomPaginationComponent } from './custom-pagination.component';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
@@ -75,5 +75,40 @@ describe('CustomPaginationComponent', () => {
     ]
     expect(component.createEllipse()[3].active).toBeTruthy();
     expect(component.createEllipse()).toStrictEqual(shouldReturn);
+  });
+
+
+  it('should click on specifc page', () => {
+    component.length = 30
+    component.pageIndex = 4
+    component.pageSize = 5
+    fixture.detectChanges()
+    const backButton = fixture.nativeElement.querySelectorAll('#gotoPage')
+    backButton[0].click()
+    fixture.detectChanges()
+    expect(backButton).toBeTruthy();
+    expect(component.pageIndex).toBe(0);
+  });
+  it('should click to back page', () => {
+    component.length = 30
+    component.pageIndex = 4
+    component.pageSize = 5
+    parentPaginatorFixture.detectChanges()
+    const backButton = fixture.nativeElement.querySelector('#prevPage')
+    backButton.click()
+    fixture.detectChanges()
+    expect(backButton).toBeTruthy();
+    expect(component.pageIndex).toBe(3);
+  });
+  it('should click to next page', () => {
+    component.length = 30
+    component.pageIndex = 1
+    component.pageSize = 5
+    parentPaginatorFixture.detectChanges()
+    const backButton = fixture.nativeElement.querySelector('#nextPage')
+    backButton.click()
+    fixture.detectChanges()
+    expect(backButton).toBeTruthy();
+    expect(component.pageIndex).toBe(2);
   });
 });
