@@ -14,12 +14,15 @@ import { SharedModule } from './shared/shared.module';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { CustomPaginationComponent } from './tabela-com-paginacao/custom-pagination/custom-pagination.component';
+import { PaginaConsultaComponent } from './pagina-consulta/pagina-consulta.component';
+import { TitleCasePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     TabelaComPaginacaoComponent,
     CustomPaginationComponent,
+    PaginaConsultaComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,9 @@ import { CustomPaginationComponent } from './tabela-com-paginacao/custom-paginat
   providers: [
     {
       provide: MatPaginatorIntl
+    },
+    {
+      provide: TitleCasePipe
     }
   ],
   bootstrap: [AppComponent],

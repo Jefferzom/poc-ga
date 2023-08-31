@@ -50,5 +50,31 @@
     { "id": 13, "nome": "Item 48" },
     { "id": 13, "nome": "Item 49" },
     { "id": 13, "nome": "Item 50" }
-  ]
+  ],
+  "contracts": {
+    "contracts": [
+      {
+        "accountNumber": 1010101,
+        "contractorName": "Teste",
+        "dateOfStart": "2023-02-28",
+        "dueDate": "2023-02-28",
+        "dateOfBlocking": "2023-02-28",
+        "type": "Manual"
+      },
+      {
+        "accountNumber": 1010101,
+        "contractorName": "Teste",
+        "dateOfStart": "2023-02-28",
+        "dueDate": "2023-02-28",
+        "dateOfBlocking": "2023-02-28",
+        "type": "Manual"
+      }
+    ],
+    "pagination": {
+      "number": 1,
+      "size": 10,
+      "totalPages": 1,
+      "totalELements": 2
+    }
+  }
 }

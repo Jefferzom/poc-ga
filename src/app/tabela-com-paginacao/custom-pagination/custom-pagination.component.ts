@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatTable } from '@angular/material/table';
 
 interface CustomPageEvent extends PageEvent {
   pageEvent: string;
@@ -87,8 +88,18 @@ export class CustomPaginationComponent extends MatPaginator {
     this.page.emit(customPageEvent);
   }
 
+  private scrollViewToTable() {
+    const topTableFocus = document.getElementById('top-table');
+    console.log(topTableFocus)
+  
+    if (topTableFocus) {
+      topTableFocus.scrollIntoView({ behavior: 'smooth'})
+    }
+  }
+
   getEventArrow(ev?: string) {
     this._myEmitPageEvent(undefined, ev)
+    this.scrollViewToTable();
   }
 
   @HostListener('document:click', ['$event.target'])

@@ -17,4 +17,6 @@ export class GenericService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/tabela`);
   }
+
+  
 }

@@ -1,5 +1,5 @@
 <!-- tabela-com-paginacao.component.html -->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table id="top-table" [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container *ngFor="let column of columnNames; let i = index" [matColumnDef]="column">
     <th mat-header-cell *matHeaderCellDef>{{column}}</th>
     <td mat-cell *matCellDef="let item">{{ item[keyName[i]] }}</td>

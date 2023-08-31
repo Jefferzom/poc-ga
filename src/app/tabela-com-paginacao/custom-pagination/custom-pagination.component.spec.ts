@@ -28,12 +28,16 @@ describe('CustomPaginationComponent', () => {
       providers: [MatPaginatorIntl, ChangeDetectorRef],
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(CustomPaginationComponent);
     parentPaginatorFixture = TestBed.createComponent(ParentPaginatorComponent);
     component = fixture.componentInstance;
     parentPaginatorFixture.detectChanges();
   });
+  
+  beforeAll(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -111,4 +115,13 @@ describe('CustomPaginationComponent', () => {
     expect(backButton).toBeTruthy();
     expect(component.pageIndex).toBe(2);
   });
+
+  it('testando table scroll', () => {
+    const topTableFocus = document.createElement('div');
+    topTableFocus.setAttribute('id', 'top-table');
+    document.body.appendChild(topTableFocus)
+    fixture.detectChanges()
+    const backButton = fixture.nativeElement.querySelector('#nextPage')
+    backButton.click()
+  })
 });
